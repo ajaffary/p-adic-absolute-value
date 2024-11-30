@@ -44,11 +44,11 @@ def valuation(prime: int, integer: int):
 # compute the p-adic valuation of a rational number
 #   the p-adic valuation of a rational number is the difference between
 #   the valuations on the numerator and the denominator
-def valuation_rational(prime: int, rational: str):    
+def valuation_rational(prime: int, rational):    
     # convert float to ratio of integers a/b
     # see https://docs.python.org/3/library/fractions.html
     # ratio = Fraction(rational).limit_denominator().as_integer_ratio()
-    ratio = Fraction(eval(rational)).limit_denominator().as_integer_ratio()
+    ratio = Fraction(eval(str(rational))).limit_denominator().as_integer_ratio()
     
     # compute valuation of numerator 
     a = valuation(prime, ratio[0])
@@ -66,7 +66,7 @@ def valuation_rational(prime: int, rational: str):
 # compute p-adic absolute value of a rational number
 #   the p-adic absolute value of a number is the reciprocal of the prime number
 #   raised to its valuation on that number
-def p_adic_abs(prime: int, rational: str):
+def p_adic_abs(prime: int, rational):
     
     # compute valuation
     val = valuation_rational(prime, rational)
@@ -78,4 +78,5 @@ def p_adic_abs(prime: int, rational: str):
         return int(abs)
     else:
         # question: return as float or fraction?
+        # refactor as class method?
         return to_fraction(abs)
