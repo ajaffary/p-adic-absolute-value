@@ -1,0 +1,65 @@
+{% raw %} 
+<!-- This is a base view template page with HTML landmark structure -->
+{% endraw %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+      {% block head %}
+        {% block metadata %}
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% endblock metadata %}
+
+        {% block stylesheet %}
+        <link rel="stylesheet" href="static/styles.css">
+        {% endblock stylesheet %}
+
+        <title>
+          {% block title %}
+          (title)
+          {% endblock title %}
+        </title>
+
+        {% block script %}
+          <script src="" async defer></script>
+        {% endblock script %}
+          <!-- 
+            from: https://stackoverflow.com/questions/436411/where-should-i-put-script-tags-in-html-markup
+            notes on async and defer to allow script to download and wait for 
+            execution in order
+          -->
+      {% endblock head %}
+    </head>
+    <body>
+        {% block body %}
+        (body begin)
+        <header>
+          {% block header %}
+          (header)
+          {% endblock header %}
+        </header>
+
+        <main>
+          {% block main %}
+          (main content)
+          {% endblock main %}
+        </main>
+
+        <nav>
+          {% block nav %}
+          (nav)
+          {% endblock nav %}
+        </nav>
+
+        <footer>
+          {% block footer %}
+          (footer)
+          {% endblock footer %}
+        </footer>        
+        (body end)
+        {% endblock body %}
+    </body>
+</html>

@@ -1,0 +1,130 @@
+{% raw %}
+<!-- This extends the base.html template for the p-adic calculator SPA -->
+{% endraw %}
+
+{% extends 'base.html' %}
+
+{% block title %}
+  P-Adic Absolute Value Calculator
+{% endblock title%}
+
+{% block script %}
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+{% endblock script %}
+
+{% block body %}
+
+  {% block header %}
+    <h1>P-Adic Absolute Value Calculator</h1>
+  {% endblock header %}
+
+  {% block main %}
+
+    {% block input_form_jinja %}
+    <!-- form is the instantiation of InputForm defined in p_adic_controller -->
+      <p>{{ form.validate() }}</p>
+      <label form="p-adic_input_jinja">
+        P-Adic Calculator Input Form (Jinja)
+      </label>
+
+      <form method="POST" action="" id="p-adic_input_jinja">
+        <!-- 
+          can pass attributes via **kwargs? doesn't seem like it.
+          is this possible?
+        -->
+
+        <!-- 
+          This should generate <label id="prime"> 
+          additional attributes wanted??
+          -->
+        {{ form.prime.label() }}
+        {{ form.prime }}
+          
+        <!-- 
+          This should generate <label id="rational">
+          additional attributes wanted??
+          -->
+        {{ form.rational.label() }}
+        {{ form.rational }}
+        
+        <!-- submit button; there is a field for this in InputForm -->
+        {{ form.submit }}
+
+        <!-- Math Expression for p_prime(rational) -->
+        {{ form.prime.data }}-adic valuation of {{ form.rational.data }}:
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <msub>
+            <mi>p</mi>
+            <mi>{{ form.prime.data }}</mi>
+          </msub>
+          <mrow>
+            <mo>(</mo>
+            <mi>{{ form.rational.data }}</mi>
+            <mo>)</mo>
+            <mo>=</mo>
+          </mrow>
+        </math>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+          <msub>
+            <mfenced open="|" close="|">
+              <mi>{{ form.rational.data }}</mi>
+            </mfenced>
+            <mi>{{ form.prime.data }}</mi>
+          </msub>
+          <mo>=</mo>
+        </math>
+        <!-- controller passes value of result here -->
+        {% if result != None %}
+          {{ result }}
+        {% endif %}
+      </form>
+    {% endblock input_form_jinja %}
+
+    {% block input_form_html %}
+      <label form="input_form_template">
+        HTML Input Form Template
+      </label>
+      <form id="input_form_template">
+        <label for="input_id" aria-label="input_element_desc">
+          Input Label Name:
+        </label>
+        <input type="number"
+              value="default_value"
+              id="input_id"
+              name="input_name"
+              placeholder="placeholder text"
+              aria-required="true"
+              aria-describedby="id_of_element_with_description"
+              class="">
+        <!-- signify required -->  
+        
+        <input type="button" 
+              id="input_submit_id" 
+              name="input_button" 
+              value="Submit" 
+              aria-label="Submit"
+              class="">
+
+        <button form="p-adic_input" 
+                type="submit" 
+                aria-label="Submit form"
+                value="intial_value"
+                class="">
+          Submit
+        </button>
+      </form>
+    {% endblock input_form_html %}
+
+  {% endblock main %}
+  
+  {% block footer %}
+  (put references)
+
+  - wolfram
+  
+  - p-adic Notes
+  {% endblock footer %}
+
+{% endblock body %}

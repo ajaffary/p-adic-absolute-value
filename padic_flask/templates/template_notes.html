@@ -1,0 +1,252 @@
+<!--
+
+idea:  
+  - write HTML skeleton
+    - landmarks and other static content
+  - fill with {% block block_name %} and {{ expression }} statements
+  - include logic where needed
+  - use child templates to update {% block %} elements with specific content
+    - begin with {% extends base_template.html %}
+  - use macros {% macro function() %} {% endmacro %} to define reusable content
+    - call macro within html elements by {{ function() }}
+    - import first when defined in other templates:
+      - {% import 'entire_template.html' as entire_template }
+        - call by entire_template.function_name()
+      - {% from 'entire_template.html' import specific_function_name }
+        - name change required if imported macro has same name as a macro in 
+          current template, e.g. child wil not override parent
+  - use class data and functions from in model to also generate content
+    - in this app, extend WTForm Form and Flask-WTF FlaskForm classes
+    - define all fields and attributes (see below)
+    - use field_names and methods to populate form template(s)
+      - parameters can be passed when instantiating, e.g. 
+        {{ form.field_name(size=30, maxlength=50) }}
+      - faq: How do I mark in a template when a field is required?
+        - Some validators (notably Required and Optional) set flags on the 
+          fields’ flags object. To use this in a template, you can do something 
+          like:
+          {% for field in form %}
+              {{ field }}
+              {% if field.flags.required %}*{% endif %}{{ field.label }}
+          {% endfor %}
+
+
+# Jinja Notes:
+- https://jinja.palletsprojects.com/en/stable/templates/
+There are a few kinds of delimiters. The default Jinja delimiters are configured
+as follows:
+
+{% ... %} for Statements
+{{ ... }} for Expressions to print to the template output
+{# ... #} for Comments not included in the template output
+
+You can use a dot (.) to access attributes of a variable in addition to the 
+standard Python __getitem__ “subscript” syntax ([]).
+
+The following lines do the same thing:
+
+{{ foo.bar }}
+{{ foo['bar'] }}
+
+It’s important to know that the outer double-curly braces are _not_ part of the 
+variable, but the print statement. If you access variables inside tags _don’t_ 
+put the braces around them.
+
+Note: https://gist.github.com/SEJeff/4207694
+- Using Jinja inside Python interpreter
+- I used it to test {{ (variable) }} vs. {{ variable }} and got same result
+
+- Child Templates:  use blocks to structure template
+{% block name_of_block %}
+{% endblock % } or {% endblock name_of_block %} for better readability
+
+{ % extends "base.html" } creates a child template
+
+{{ super() }} returns contents of parent block, can be chained super.super() etc
+
+- Macros: write functions to generate reusable elements
+You can also strip whitespace in templates by hand. If you add a minus sign (-) 
+to the start or end of a block (e.g. a For tag), a comment, or a variable 
+expression, the whitespaces before or after that block will be removed:
+
+
+# Flask & Forms notes:
+- From WTForms docs:
+https://wtforms.readthedocs.io/en/2.3.x/fields/#basic-fields
+
+"To render a field, simply call it, providing any values the widget expects 
+as keyword arguments. Usually the keyword arguments are used for extra HTML 
+attributes."
+
+how? field_name(*args, **kwargs)
+
+"In all of the WTForms HTML widgets, keyword arguments are turned to HTML 
+attributes, though in theory a widget is free to do anything it wants with 
+the supplied keyword arguments, and widgets don’t have to even do anything 
+related to HTML."
+
+Field Parameters:
+  - label: The label of the field.
+  - validators: A sequence of validators to call when validate is called.
+  - filters: A sequence of filters which are run on input data by process.
+  - description: A description for the field, typically used for help text.
+  - id: An id to use for the field. A reasonable default is set by the form, 
+      and you shouldn’t need to set this manually.
+  - default: The default value to assign to the field, if no form or object 
+      input is provided. May be a callable.
+  - widget: If provided, overrides the widget used to render the field.
+  - render_kw (dict): If provided, a dictionary which provides default keywords
+      that will be given to the widget at render time.
+
+
+Field Properties:
+  - name: The HTML form name of this field. This is the name as defined in your 
+      Form prefixed with the prefix passed to the Form constructor.
+
+      https://www.w3schools.com/tags/att_input_name.asp
+      The name attribute is used to reference elements in a JavaScript, or to 
+      reference form data after a form is submitted.
+
+      Note: Only form elements with a name attribute will have their values 
+      passed when submitting a form.
+
+  - id: The HTML ID of this field. If unspecified, this is generated for you to 
+      be the same as the field name.
+  - label: This is a Label instance which when evaluated as a string returns an 
+      HTML <label for="id"> construct.
+  - widget: The widget used to render the field.
+  - type: The type of this field, as a string. This can be used in your 
+      templates to do logic based on the type of field
+
+Basic fields:
+  Basic fields generally represent scalar data types with single values, 
+  and refer to a single input from the form.
+
+  - class wtforms.fields.DecimalField(default field arguments, places=2,
+      rounding=None, use_locale=False, number_format=None)
+      A text field which displays and coerces data of the decimal.Decimal type
+
+  - class wtforms.fields.FloatField(default field arguments)
+      A text field, except all input is coerced to an float.
+      Erroneous input is ignored and will not be accepted as a value.
+      For the majority of uses, DecimalField is preferable to FloatField, 
+      except for in cases where an IEEE float is absolutely desired over a 
+      decimal value.
+
+  - class wtforms.fields.IntegerField(default field arguments)
+      A text field, except all input is coerced to an integer.
+      Erroneous input is ignored and will not be accepted as a value.
+  
+  - class wtforms.fields.SubmitField(default field arguments)
+      Represents an <input type="submit">. This allows checking if a given 
+      submit button has been pressed.
+
+  - class wtforms.fields.StringField(default field arguments)
+      This field is the base for most of the more complicated fields, 
+      and represents an <input type="text">.
+
+  - class wtforms.fields.Label
+      On all fields, the label property is an instance of this class. 
+      Labels can be printed to yield a <label for="field_id">Label Text</label> 
+      HTML tag enclosure. Similar to fields, you can also call the label with 
+      additional html params.
+    
+    - field_id
+        The ID of the field which this label will reference.
+
+    - text
+        The original label text passed to the field’s constructor.
+
+Widgets:
+  - class wtforms.widgets.Input(input_type=None)
+      Render a basic <input> field.
+      This is used as the basis for most of the other input fields.
+
+      By default, the _value() method will be called upon the associated field 
+      to provide the value= HTML attribute.
+
+      [note: see input type=submit]
+
+  - class wtforms.widgets.TextInput
+      Render a single-line text input.
+  
+  - class wtforms.widgets.SubmitInput
+      Renders a submit button.
+
+      The field’s label is used as the text of the submit button instead of the 
+      data on the field.
+
+HTML5 widgets
+(see list)
+
+Widget-Building Utilities:
+  These utilities are used in WTForms widgets to help render HTML and also in
+  order to work along with HTML templating frameworks. They can be imported for 
+  use in building custom widgets as well.
+
+  - wtforms.widgets.html_params(**kwargs)
+      Generate HTML attribute syntax from inputted keyword arguments.
+
+      The output value is sorted by the passed keys, to provide consistent 
+      output each time this function is called with the same parameters. 
+      Because of the frequent use of the normally reserved keywords class and 
+      for, suffixing these with an underscore will allow them to be used.
+
+      In order to facilitate the use of data- and aria- attributes, if the name 
+      of the attribute begins with data_ or aria_, then every underscore will be
+      replaced with a hyphen in the generated attribute.
+
+      >>> html_params(data_attr='user.name', aria_labeledby='name')
+      'data-attr="user.name" aria-labeledby="name"'
+
+
+HTTP request methods: 
+https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods
+
+HTML notes:
+
+form element
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/form#method
+- https://www.w3schools.com/html/html_forms.asp
+- form elements: https://www.w3schools.com/html/html_form_elements.asp
+  - button: https://www.w3schools.com/tags/tag_button.asp
+    - attributes:
+      - form (form_id): https://www.w3schools.com/tags/att_button_form.asp
+      - formaction (url): https://www.w3schools.com/tags/att_button_formaction.asp
+      - id: 
+      - name: https://www.w3schools.com/tags/att_button_name.asp
+      - type: https://www.w3schools.com/tags/att_button_type.asp
+      - value: https://www.w3schools.com/tags/att_button_value.asp
+    - button element vs input type=button:
+
+  - input: https://www.w3schools.com/tags/tag_input.asp
+    - attributes:
+      - autocomplete: https://www.w3schools.com/tags/att_input_autocomplete.asp
+      - form: (form_id) https://www.w3schools.com/tags/att_input_form.asp
+      - formaction: (url) https://www.w3schools.com/tags/att_input_formaction.asp
+      - placeholder: https://www.w3schools.com/tags/att_input_placeholder.asp
+      - id: https://www.w3schools.com/tags/att_global_id.asp
+      - name: https://www.w3schools.com/tags/att_input_name.asp
+        - must have a name attribute for form data to be submitted
+      - required: https://www.w3schools.com/tags/att_input_required.asp
+      - type: https://www.w3schools.com/tags/att_input_type.asp
+        - button:
+        - number:
+        - text: 
+        - submit:
+          - https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/submit
+      - value: https://www.w3schools.com/tags/att_input_value.asp
+      - class: https://www.w3schools.com/tags/att_global_class.asp
+
+label element
+- https://www.w3schools.com/tags/tag_label.asp
+- https://developer.mozilla.org/en-US/docs/Web/HTML/Element/label
+- https://www.geeksforgeeks.org/html-label-tag/
+  - attributes:
+    - for: (form_element_id) https://www.w3schools.com/tags/att_label_for.asp
+    - form: (form_id) https://www.w3schools.com/tags/att_label_form.asp
+
+accessibility labels: 
+- https://www.w3schools.com/accessibility/accessibility_labels.php
+
+-->
