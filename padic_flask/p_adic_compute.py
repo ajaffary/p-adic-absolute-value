@@ -33,12 +33,42 @@ def valuation(prime: int, integer: int):
         valuation += 1
         integer = integer / prime
         remainder = is_divisible(prime, integer)
-        # int(log(integer, prime))
-    #else:
-        # if integer is not divisible by prime, valuation is zero
-    #    valuation = 0
     
     return valuation
+
+
+# alternate valuation function
+# returns valuation and prime**valuation
+# reduces need to recompute prime**valuation for integers
+# however, faster to use original valuation function for rationals
+def highest_power(prime: int, integer: int):
+    # test whether prime divides integer
+    remainder = is_divisible(prime, integer)
+
+    # if prime does not divide integer
+    if not remainder:
+        result = (0, 1)
+
+    # if user inputs zero as integer
+    elif integer == 0:
+        result = (float('inf'), float('inf'))
+
+    # while current power of prime divides integer
+    else:        
+        val = 1
+        divisor = prime
+        while remainder:
+            # store latest successful result         
+            result = (val, divisor)
+            # increment valuation
+            val+=1
+            # compute next prime power
+            divisor = divisor*prime
+            # run test again
+            remainder = is_divisible(divisor, integer)
+
+    print(f'valuation: {result[0]}, p^{result[0]}: {result[1]}')
+    return(result)
 
 
 # compute the p-adic valuation of a rational number
@@ -57,11 +87,10 @@ def valuation_rational(prime: int, rational):
     b = valuation(prime,ratio[1])
 
     # compute difference
-    # no need to create a pointer for this if returning it?
     val = a - b
 
     return val
-
+    
 
 # compute p-adic absolute value of a rational number
 #   the p-adic absolute value of a number is the reciprocal of the prime number
