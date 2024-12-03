@@ -24,14 +24,13 @@
 
     {% block input_form_jinja %}
     <!-- form is the instantiation of InputForm defined in p_adic_controller -->
-      <p>{{ form.validate() }}</p>
       <label form="p-adic_input_jinja">
         P-Adic Calculator Input Form (Jinja)
       </label>
-
+      <p>Form Validated: {{ form.validate() }}</p>
       <form method="POST" action="" id="p-adic_input_jinja">
         <!-- 
-          can pass attributes via **kwargs? doesn't seem like it.
+          can we pass attributes via **kwargs? doesn't seem like it.
           is this possible?
         -->
 
@@ -39,21 +38,36 @@
           This should generate <label id="prime"> 
           additional attributes wanted??
           -->
-        {{ form.prime.label() }}
-        {{ form.prime }}
-          
+        {% macro input(element)-%}
+          <p>{{ form[element].label() }}</p>
+          <p>{{ form[element] }}</p>
+        {%- endmacro %}  
+        
+        <!-- 
+          This should generate <label id="prime"> 
+          additional attributes wanted??
+          -->
+        {{ input('prime') }}
+        
         <!-- 
           This should generate <label id="rational">
           additional attributes wanted??
           -->
+        {{ input('rational') }}
+
+        <!-- 
         {{ form.rational.label() }}
         {{ form.rational }}
-        
+        -->
+
         <!-- submit button; there is a field for this in InputForm -->
         {{ form.submit }}
 
         <!-- Math Expression for p_prime(rational) -->
-        {{ form.prime.data }}-adic valuation of {{ form.rational.data }}:
+        <p>
+        The {{ form.prime.data }}-adic valuation of {{ form.rational.data }} is:
+        </p>
+        <p>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <msub>
             <mi>p</mi>
@@ -69,7 +83,9 @@
         <math xmlns="http://www.w3.org/1998/Math/MathML">
           <msub>
             <mfenced open="|" close="|">
+              <mo>|</mo>
               <mi>{{ form.rational.data }}</mi>
+              <mo>|</mo>
             </mfenced>
             <mi>{{ form.prime.data }}</mi>
           </msub>
@@ -80,9 +96,12 @@
           {{ result }}
         {% endif %}
       </form>
+    </p>
     {% endblock input_form_jinja %}
 
     {% block input_form_html %}
+    <div>
+      <h2>HTML generated form</h2>
       <label form="input_form_template">
         HTML Input Form Template
       </label>
@@ -115,15 +134,15 @@
           Submit
         </button>
       </form>
+    </div>
     {% endblock input_form_html %}
 
   {% endblock main %}
   
   {% block footer %}
   (put references)
-
-  - wolfram
-  
+  - copyright
+  - wolfram  
   - p-adic Notes
   {% endblock footer %}
 
