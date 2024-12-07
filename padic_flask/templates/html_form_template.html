@@ -1,0 +1,42 @@
+{% block input_form_html %}
+<div>
+  <h2>HTML generated form</h2>
+  <label form="input_form_template">
+    HTML Input Form Template
+  </label>
+  <form id="input_form_template">
+    <label for="input_id" aria-label="input_element_desc">
+      Input Label Name:
+    </label>
+    <p>
+      <input type="number"
+      value="default_value"
+      id="input_id"
+      name="input_name"
+      placeholder="placeholder text"
+      aria-required="true"
+      aria-describedby="id_of_element_with_description"
+      class="">
+      <!-- signify required -->  
+    </p>        
+    <label for="input_submit_id">Input type=button</label>
+    <p>
+      <input type="button" 
+      id="input_submit_id" 
+      name="input_button" 
+      value="Submit" 
+      aria-label="Submit"
+      class="">
+    </p>
+
+    <p>Button element</p>
+    <button form="p-adic_input" 
+            type="submit" 
+            aria-label="Submit form"
+            value="intial_value"
+            class="">
+      Submit
+    </button>
+  </form>
+</div>
+{% endblock input_form_html %}

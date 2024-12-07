@@ -3,15 +3,16 @@
 ## To Do List
 
 ### Controller
-- change "enter prime" to "choose a prime"
-  - include a list of primes?
+- change "enter prime" to "choose a prime" (?)
+  - enter a prime is better for now?
 
 ### Model
-- add labels and default values to form elements
-- need a list of primes
+- add labels and default values to form elements (done)
+- create a list of primes for user?
   - does this go into Form? No? It's just a data structure containing primes
+  - suggest a link for user
 - allow user to enter their own prime?
-  - requires prime number validator
+  - requires prime number validator (see below)
 
 ### View
 - create full HTML page structure
@@ -20,18 +21,32 @@
   - Search for more examples
 - Form structure?
   - See docs for examples
-  - revisit HTML form MDN docs for accessibility
-  - WTForms templates:https://flask.palletsprojects.com/en/stable/patterns/wtforms/
-  - 
-    - 
+    - revisit HTML form MDN docs for accessibility
+    - WTForms/Flask-WTF form validation: https://flask.palletsprojects.com/en/stable/patterns/wtforms/
+  - created successful Jinja template
+    - macros for input fields created
+    - can WTForms class output `<form>` element?
+    - next: put macros in their own file & import
 - update app interface
-  - add labels to form input fields
+  - add labels to form input fields (done)
+  - create vertical viewport dimensions
+  - create grid
   - add CSS
+    - fonts
+    - spacing
+    - borders
+    - link hover
+- notes/references section
+- footer author info
 
 ### Compute Functions
 - prime number validator?
   - can be bogged down with large number
   - valuation can be done for non-prime, but not useful (?)
+    - see reference on zero divisor rings
+- added highest_power function on compute branch
+  - faster for integers
+  - doesn't save time for rational numbers
 
 ### References
 - https://math.stackexchange.com/questions/1919274/why-are-p-adic-numbers-and-p-adic-integers-only-defined-for-p-prime

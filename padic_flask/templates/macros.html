@@ -1,0 +1,4 @@
+{% macro input(form, element)-%}
+  <p>{{ form[element].label() }}</p>
+  <p>{{ form[element] }}</p>
+{%- endmacro %}  

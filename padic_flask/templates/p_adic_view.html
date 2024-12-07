@@ -1,8 +1,9 @@
+{% extends 'base.html' %}
 {% raw %}
 <!-- This extends the base.html template for the p-adic calculator SPA -->
 {% endraw %}
 
-{% extends 'base.html' %}
+{% import 'macros.html' as macros %}
 
 {% block title %}
   P-Adic Absolute Value Calculator
@@ -23,127 +24,88 @@
   {% block main %}
 
     {% block input_form_jinja %}
-    <!-- form is the instantiation of InputForm defined in p_adic_controller -->
-      <label form="p-adic_input_jinja">
-        P-Adic Calculator Input Form (Jinja)
-      </label>
-      <p>Form Validated: {{ form.validate() }}</p>
-      <form method="POST" action="" id="p-adic_input_jinja">
-        <!-- 
-          can we pass attributes via **kwargs? doesn't seem like it.
-          is this possible?
+
+    <section id="form" class="">
+      <!-- 
+        {form} is the instantiation of InputForm defined in p_adic_controller 
         -->
-
-        <!-- 
-          This should generate <label id="prime"> 
-          additional attributes wanted??
-          -->
-        {% macro input(element)-%}
-          <p>{{ form[element].label() }}</p>
-          <p>{{ form[element] }}</p>
-        {%- endmacro %}  
-        
-        <!-- 
-          This should generate <label id="prime"> 
-          additional attributes wanted??
-          -->
-        {{ input('prime') }}
-        
-        <!-- 
-          This should generate <label id="rational">
-          additional attributes wanted??
-          -->
-        {{ input('rational') }}
-
-        <!-- 
-        {{ form.rational.label() }}
-        {{ form.rational }}
-        -->
-
-        <!-- submit button; there is a field for this in InputForm -->
-        {{ form.submit }}
-
-        <!-- Math Expression for p_prime(rational) -->
-        <p>
-        The {{ form.prime.data }}-adic valuation of {{ form.rational.data }} is:
-        </p>
-        <p>
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <msub>
-            <mi>p</mi>
-            <mi>{{ form.prime.data }}</mi>
-          </msub>
-          <mrow>
-            <mo>(</mo>
-            <mi>{{ form.rational.data }}</mi>
-            <mo>)</mo>
-            <mo>=</mo>
-          </mrow>
-        </math>
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-          <msub>
-            <mfenced open="|" close="|">
-              <mo>|</mo>
-              <mi>{{ form.rational.data }}</mi>
-              <mo>|</mo>
-            </mfenced>
-            <mi>{{ form.prime.data }}</mi>
-          </msub>
-          <mo>=</mo>
-        </math>
-        <!-- controller passes value of result here -->
-        {% if result != None %}
-          {{ result }}
-        {% endif %}
-      </form>
-    </p>
-    {% endblock input_form_jinja %}
-
-    {% block input_form_html %}
-    <div>
-      <h2>HTML generated form</h2>
-      <label form="input_form_template">
-        HTML Input Form Template
-      </label>
-      <form id="input_form_template">
-        <label for="input_id" aria-label="input_element_desc">
-          Input Label Name:
+        <label form="p-adic_input_jinja">
+          P-Adic Calculator Input Form (Jinja)
         </label>
-        <input type="number"
-              value="default_value"
-              id="input_id"
-              name="input_name"
-              placeholder="placeholder text"
-              aria-required="true"
-              aria-describedby="id_of_element_with_description"
-              class="">
-        <!-- signify required -->  
-        
-        <input type="button" 
-              id="input_submit_id" 
-              name="input_button" 
-              value="Submit" 
-              aria-label="Submit"
-              class="">
+        <p>
+          Form Validated: {{ form.validate() }}
+        </p>
+        <form method="POST" action="" id="p-adic_input_jinja">
+          <!-- 
+            This generates <label id="prime"> 
+            additional attributes wanted??
+            -->
+          {{ macros.input(form, 'prime') }}
 
-        <button form="p-adic_input" 
-                type="submit" 
-                aria-label="Submit form"
-                value="intial_value"
-                class="">
-          Submit
-        </button>
-      </form>
-    </div>
-    {% endblock input_form_html %}
+          <!-- 
+            This should generate <label id="rational">
+            additional attributes wanted??
+            -->
+          {{ macros.input(form, 'rational') }}
+
+          <!-- 
+            submit button; from SubmitField 
+           -->
+          {{ form.submit }}
+
+          <!-- Math Expression for p_prime(rational) -->
+          <p>
+          The {{ form.prime.data }}-adic valuation of {{ form.rational.data }} is:
+          </p>
+          <p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <msub>
+                <mi>p</mi>
+                <mi>{{ form.prime.data }}</mi>
+              </msub>
+              <mrow>
+                <mo>(</mo>
+                <mi>{{ form.rational.data }}</mi>
+                <mo>)</mo>
+                <mo>=</mo>
+              </mrow>
+            </math>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <msub>
+                <mfenced open="|" close="|">
+                  <mo>|</mo>
+                  <mi>{{ form.rational.data }}</mi>
+                  <mo>|</mo>
+                </mfenced>
+                <mi>{{ form.prime.data }}</mi>
+              </msub>
+              <mo>=</mo>
+            </math>
+            <!-- controller passes value of result here -->
+            {% if result != None %}
+              {{ result }}
+            {% endif %}
+          </p>
+        </form>
+    </section>
+    {% endblock input_form_jinja %}
+    
+    {% block references %}
+    <section id="references" class="">
+      <h2>References</h2>
+        <ol>
+          <li>wolfram      
+          </li>
+          <li>p-adic Notes
+          </li>
+        </ol>
+    </section>
+    {% endblock references %}
 
   {% endblock main %}
   
   {% block footer %}
-  (put references)
-  - copyright
-  - wolfram  
-  - p-adic Notes
+    <p>copyright/author</p>
   {% endblock footer %}
 
 {% endblock body %}
