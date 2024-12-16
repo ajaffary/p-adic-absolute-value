@@ -6,7 +6,7 @@
 {% import 'macros.html' as macros %}
 
 {% block title %}
-  P-Adic Absolute Value Calculator
+  p-adic Absolute Value Calculator
 {% endblock title%}
 
 {% block script %}
@@ -16,19 +16,25 @@
 {% endblock script %}
 
 {% block body %}
+<body class="nunito-400">
 
   {% block header %}
-    <h1>P-Adic Absolute Value Calculator</h1>
+  <header>
+    <h1 class="center">p-adic Absolute Value Calculator</h1>
+  </header>
   {% endblock header %}
+  
+  <hr>
 
   {% block main %}
-
+  <main>
     {% block input_form_jinja %}
 
-    <section id="form" class="">
+    <section id="form" class="app-container center">
       <!-- 
         {form} is the instantiation of InputForm defined in p_adic_controller 
         -->
+        <div class="app-tile app-tile-row-1">
         <label form="p-adic_input_jinja">
           P-Adic Calculator Input Form (Jinja)
         </label>
@@ -52,11 +58,13 @@
             submit button; from SubmitField 
            -->
           {{ form.submit }}
+          </div>
 
           <!-- Math Expression for p_prime(rational) -->
+          <div class="app-tile app-tile-row-2">
           <p>
-          The {{ form.prime.data }}-adic valuation of {{ form.rational.data }} is:
-          </p>
+          The {{ form.prime.data }}-adic norm of</p>
+          <p>{{ form.rational.data }} is:</p>
           <p>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <msub>
@@ -86,12 +94,15 @@
               {{ result }}
             {% endif %}
           </p>
+        </div>
         </form>
     </section>
     {% endblock input_form_jinja %}
     
+    <hr>
+
     {% block references %}
-    <section id="references" class="">
+    <section id="references" class="left">
       <h2>References</h2>
         <ol>
           <li>wolfram      
@@ -102,10 +113,16 @@
     </section>
     {% endblock references %}
 
+  </main>
   {% endblock main %}
   
+  <hr>
+  
   {% block footer %}
+  <footer>
     <p>copyright/author</p>
+  </footer>
   {% endblock footer %}
 
+</body>
 {% endblock body %}

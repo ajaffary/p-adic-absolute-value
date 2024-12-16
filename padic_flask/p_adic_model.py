@@ -16,7 +16,7 @@ class InputForm(Form):
     - another validator, InputRequired, which requires a user to enter
     input before submitting
     """    
-    prime = IntegerField(label='Enter a prime number', 
+    prime = IntegerField(label='Enter a prime number:', 
                          validators=[validators.InputRequired()],
                          id='prime',
                          default=3,

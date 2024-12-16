@@ -11,6 +11,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
         {% endblock metadata %}
 
         {% block stylesheet %}
@@ -33,33 +34,34 @@
           -->
       {% endblock head %}
     </head>
-    <body>
-        {% block body %}
+    {% block body %}
+      <body>
         (body begin)
+        {% block header %}
         <header>
-          {% block header %}
           (header)
-          {% endblock header %}
         </header>
+        {% endblock header %}
 
+        {% block main %}
         <main>
-          {% block main %}
           (main content)
-          {% endblock main %}
         </main>
+        {% endblock main %}
 
+        {% block nav %}
         <nav>
-          {% block nav %}
           (nav)
-          {% endblock nav %}
         </nav>
+        {% endblock nav %}
 
+        {% block footer %}
         <footer>
-          {% block footer %}
           (footer)
-          {% endblock footer %}
         </footer>        
+        {% endblock footer %}
+
         (body end)
-        {% endblock body %}
-    </body>
+      </body>
+    {% endblock body %}
 </html>
