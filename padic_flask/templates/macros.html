@@ -1,4 +1,4 @@
 {% macro input(form, element)-%}
-  <p>{{ form[element].label() }}</p>
-  <p>{{ form[element] }}</p>
+  <p>{{ form[element].label()|safe }}</p>
+  <p>{{ form[element]|safe }}</p>
 {%- endmacro %}  

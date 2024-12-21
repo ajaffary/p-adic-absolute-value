@@ -1,5 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import Form, IntegerField, FloatField, StringField, SubmitField, validators
+from markupsafe import Markup
 
 # see https://wtforms.readthedocs.io/en/3.1.x/crash_course/
 
@@ -15,8 +16,10 @@ class InputForm(Form):
     - a default validator checks that the user supplies an integer
     - another validator, InputRequired, which requires a user to enter
     input before submitting
-    """    
-    prime = IntegerField(label='Enter a prime number:', 
+    """
+    link = '<a href="#prime_note">[1]</a>'
+    prime_label = f'Enter a prime number<sup id="prime_footnote_marker">{link}</sup>:'
+    prime = IntegerField(label=Markup(prime_label), 
                          validators=[validators.InputRequired()],
                          id='prime',
                          default=3,

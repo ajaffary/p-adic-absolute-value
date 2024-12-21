@@ -10,9 +10,12 @@
 {% endblock title%}
 
 {% block script %}
-  <script type="text/javascript" id="MathJax-script" async
+  <!-- 
+    <script type="text/javascript" id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-  </script>
+    </script>
+    -->
+  <script type="text/javascript" src="static/methods.js"></script>
 {% endblock script %}
 
 {% block body %}
@@ -20,51 +23,38 @@
 
   {% block header %}
   <header>
-    <h1 class="center">p-adic Absolute Value Calculator</h1>
+      <h1 id="app_id" class="center">p-adic Absolute Value Calculator</h1>
   </header>
   {% endblock header %}
   
-  <hr>
-
+  <!-- <hr> -->
   {% block main %}
   <main>
     {% block input_form_jinja %}
-
     <section id="form" class="app-container center">
-      <!-- 
-        {form} is the instantiation of InputForm defined in p_adic_controller 
-        -->
+      <!-- {form} is the instantiation of InputForm defined in p_adic_controller -->
+      <form method="POST" action="" id="p-adic_input_form_jinja" 
+            aria-labelledby="app_id">
         <div class="app-tile app-tile-row-1">
-        <label form="p-adic_input_jinja">
-          P-Adic Calculator Input Form (Jinja)
-        </label>
-        <p>
-          Form Validated: {{ form.validate() }}
-        </p>
-        <form method="POST" action="" id="p-adic_input_jinja">
           <!-- 
-            This generates <label id="prime"> 
-            additional attributes wanted??
-            -->
+            Use for debugging form validation
+            <p>Form Validated: {{ form.validate() }}</p>
+          -->
+
+          <!-- This generates <label id="prime"> additional attributes wanted?? -->
           {{ macros.input(form, 'prime') }}
 
-          <!-- 
-            This should generate <label id="rational">
-            additional attributes wanted??
-            -->
+          <!-- This should generate <label id="rational"> additional attributes wanted?? -->
           {{ macros.input(form, 'rational') }}
 
-          <!-- 
-            submit button; from SubmitField 
-           -->
+          <!-- submit button; from SubmitField -->
           {{ form.submit }}
-          </div>
-
-          <!-- Math Expression for p_prime(rational) -->
-          <div class="app-tile app-tile-row-2">
+        </div>
+        <div class="app-tile app-tile-row-2">
           <p>
-          The {{ form.prime.data }}-adic norm of</p>
-          <p>{{ form.rational.data }} is:</p>
+          The {{ form.prime.data }}-adic norm of {{ form.rational.data }} is:
+          </p>
+          <!-- Math Expression for p_prime(rational) -->
           <p>
             <math xmlns="http://www.w3.org/1998/Math/MathML">
               <msub>
@@ -90,26 +80,86 @@
               <mo>=</mo>
             </math>
             <!-- controller passes value of result here -->
-            {% if result != None %}
-              {{ result }}
-            {% endif %}
+            <output for="prime rational" name="result" id="result" class="result">
+              {% if result != None %}
+                {{ result }}
+              {% endif %}
+            </output>
+          </p>
+          <p>
+            <button type="button" onclick="copyResult()">Copy Result to Clipboard</button>
           </p>
         </div>
-        </form>
+      </form>
     </section>
     {% endblock input_form_jinja %}
     
+    <!-- <hr> -->
+
+    {% block notes %}
+    <section id="notes" class="">
+      <h2>Notes</h2>
+        <ol>
+          <li id="prime_note">
+              This app is meant to be a p-adic calculator for prime number 
+              bases <em>p</em>. The base number input is not checked for 
+              primality. The app will work with any integer base, though a 
+              discussion 
+              on <a href="https://math.stackexchange.com/questions/1919274/why-are-p-adic-numbers-and-p-adic-integers-only-defined-for-p-prime" target="_blank" rel="noopener noreferrer">finite fields</a> 
+              suggests why an <em>n</em>-adic norm might not be useful 
+              for composite number bases <em>n</em>.
+              <sup><a href="#prime_footnote_marker">[back to top]</a></sup>
+          </li>
+          <li>
+            Basic arithmetic expressions will work in the rational number input 
+            field, e.g. (1+2)-3*4/5**6
+          </li>
+          <li>
+            The default output is provided as a rational expression for the 
+            user to compute to their desired precision.  The float button uses 
+            [insert]-bit precision.
+          </li>
+        </ol>
+    </section>
+    {% endblock notes %}
+
     <hr>
 
     {% block references %}
-    <section id="references" class="left">
+    <section id="references" class="">
       <h2>References</h2>
-        <ol>
-          <li>wolfram      
-          </li>
-          <li>p-adic Notes
-          </li>
-        </ol>
+        <h3>Prime Numbers</h3>
+          <ol>
+            <li><a href="http://compoasso.free.fr/primelistweb/page/prime/liste_online_en.php" target="_blank" rel="noopener noreferrer">
+              List of Prime Numbers up to 1,000,000,000,000</a></li>
+            <li><a href="https://t5k.org/lists/" target="_blank" rel="noopener noreferrer">
+              Lists of Primes at the Prime Pages</a></li>
+            <li><a href="https://t5k.org/glossary/page.php?sort=sieveoferatosthenes" target="_blank" rel="noopener noreferrer">
+              The Sieve of Eratosthenes</a></li>
+            <li><a href="https://www.britannica.com/science/prime-number-theorem" target="_blank" rel="noopener noreferrer">
+              Prime Number Theorem</a></li>
+          </ol>
+        <h3>Primality Testing</h3>
+          <ol>
+            <li>Link to primality testing app</li>
+          </ol>
+        <h3>p-adic Numbers</h3>
+          <ol>
+            <li><a href="https://mathworld.wolfram.com/p-adicNumber.html" target="_blank" rel="noopener noreferrer">
+              p-adic Number</a> (Wolfram Mathworld)</li>
+            </li>
+            <li><a href="https://ncatlab.org/nlab/show/p-adic+number" target="_blank" rel="noopener noreferrer">
+              p-adic Number</a> (nLab)</li>
+            </li>
+            <li><a href="https://bookshop.org/p/books/p-adic-numbers-an-introduction-fernando-q-gouvea/14521230?ean=9783030472948" target="_blank" rel="noopener noreferrer">
+              p-adic Numbers: An Introduction</a> (Fernando Q. Gouvea)</li>
+            <li><a href="https://bookshop.org/p/books/p-adic-numbers-p-adic-analysis-and-zeta-functions-neal-koblitz/8668219?ean=9780387960173" target="_blank" rel="noopener noreferrer">
+              p-adic Numbers, p-adic Analysis, and Zeta-Functions</a> (Neal Koblitz)</li>
+            </li>
+            <li><a href="https://doc.sagemath.org/html/en/reference/padics/sage/rings/padics/tutorial.html" target="_blank" rel="noopener noreferrer">
+              p-adic Numbers in SageMath</a> (SageMath Documentation)</li>
+            </li>
+          </ol>
     </section>
     {% endblock references %}
 
@@ -120,7 +170,8 @@
   
   {% block footer %}
   <footer>
-    <p>copyright/author</p>
+    <p>Copyright &#169; <a href="https://github.com/ajaffary" target="_blank" rel="noopener noreferrer">
+        Abbas Jaffary</a></p>
   </footer>
   {% endblock footer %}
 
