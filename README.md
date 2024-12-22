@@ -24,7 +24,7 @@ The function `p_adic_abs` takes a prime $p$ and a rational number $x$ as its arg
 where:
 
 - `val` is the p-adic valuation $val_p(x)$
-- `abs` is the p-adic norm $|x|_p$ a float
+- `abs` is the p-adic norm $|x|_p$ as a float
 - `to_fraction(abs)` is a string expressed as a ratio of integer a/b
 
 When `abs` is an integer, it has type `int`. Floats are converted to an integer ratio (with the `fractions` package).  This is for pedagogical rather than computational purposes.  
