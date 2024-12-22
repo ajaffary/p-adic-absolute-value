@@ -15,4 +15,10 @@ function copyResult() {
         .catch(err => {
           console.error('Failed to copy output: ' + err);
         });
-      };
+      }
+
+function showResult(datatype) {
+      const result = document.getElementById("result");
+      result.innerText = result.dataset[datatype];
+      console.log('Updated result: ' + result.innerText);
+      }

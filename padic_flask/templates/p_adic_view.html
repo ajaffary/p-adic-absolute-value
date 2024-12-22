@@ -6,7 +6,7 @@
 {% import 'macros.html' as macros %}
 
 {% block title %}
-  p-adic Absolute Value Calculator
+  p-adic Norm Calculator
 {% endblock title%}
 
 {% block script %}
@@ -23,19 +23,26 @@
 
   {% block header %}
   <header>
-      <h1 id="app_id" class="center">p-adic Absolute Value Calculator</h1>
+      <nav>
+        <ul id="nav">
+          <li><a href="#app_id">Calculator</a></li>
+          <li><a href="#notes">Notes</a></li>
+          <li><a href="#references">References</a></li>
+        </ul>
+      </nav>
+      <h1 id="app_id" class="center">p-adic Norm Calculator</h1>
   </header>
   {% endblock header %}
   
-  <!-- <hr> -->
+  <hr>
   {% block main %}
   <main>
     {% block input_form_jinja %}
     <section id="form" class="app-container center">
       <!-- {form} is the instantiation of InputForm defined in p_adic_controller -->
-      <form method="POST" action="" id="p-adic_input_form_jinja" 
+      <form method="POST" action="#results" id="p-adic_input_form_jinja" 
             aria-labelledby="app_id">
-        <div class="app-tile app-tile-row-1">
+        <div id="input-tile" class="app-tile app-tile-row-1">
           <!-- 
             Use for debugging form validation
             <p>Form Validated: {{ form.validate() }}</p>
@@ -50,7 +57,41 @@
           <!-- submit button; from SubmitField -->
           {{ form.submit }}
         </div>
-        <div class="app-tile app-tile-row-2">
+        <hr id="results">
+        <div id="valuation-tile" class="app-tile app-tile-row-2">
+          <p>
+          The {{ form.prime.data }}-adic valuation of {{ form.rational.data }} is:
+          </p>
+          <!-- Math Expression for p_prime(rational) -->
+          <p>
+            <math xmlns="http://www.w3.org/1998/Math/MathML">
+              <msub>
+                <mi>val</mi>
+                <mi>{{ form.prime.data }}</mi>
+              </msub>
+              <mrow>
+                <mo>(</mo>
+                <mi>{{ form.rational.data }}</mi>
+                <mo>)</mo>
+                <mo>=</mo>
+              </mrow>
+            </math>
+            <!-- controller passes value of result here -->
+            <output data-fraction="{{ result['fraction']|safe }}" 
+                    data-float="{{ result['float']|safe }}"
+                    data-valuation="{{ result['valuation']|safe }}"
+                    for="prime rational" 
+                    name="result" 
+                    id="valuation" 
+                    class="result">
+              {% if result != None %}
+                {{ result['valuation'] }}
+              {% endif %}
+            </output>
+          </p>
+        </div>
+        <hr>
+        <div id="norm-tile" class="app-tile app-tile-row-3">
           <p>
           The {{ form.prime.data }}-adic norm of {{ form.rational.data }} is:
           </p>
@@ -79,22 +120,35 @@
               </msub>
               <mo>=</mo>
             </math>
+            </p>
+            <p>
             <!-- controller passes value of result here -->
-            <output for="prime rational" name="result" id="result" class="result">
+            <output data-fraction="{{ result['fraction']|safe }}" data-float="{{ result['float']|safe }}" for="prime rational" name="result" id="result" class="result">
               {% if result != None %}
-                {{ result }}
+                {{ result['fraction'] }}
               {% endif %}
             </output>
           </p>
+        </div>
+        <div class="app-tile app-tile-row-4">
           <p>
-            <button type="button" onclick="copyResult()">Copy Result to Clipboard</button>
+            <button id="show-float" type="button" onclick="showResult('float')">Convert Norm to Float</button>
+          </p>
+          <p>
+            <button id="show-rational" type="button" onclick="showResult('fraction')">Convert Norm to Fraction</button>
+          </p>
+          <p>
+            <button id="copy-result" type="button" onclick="copyResult()">Copy Norm to Clipboard</button>
+          </p>
+          <p class="back-to-top left">
+            {{ macros.back_to_top() }}
           </p>
         </div>
       </form>
     </section>
     {% endblock input_form_jinja %}
     
-    <!-- <hr> -->
+    <hr>
 
     {% block notes %}
     <section id="notes" class="">
@@ -108,18 +162,19 @@
               on <a href="https://math.stackexchange.com/questions/1919274/why-are-p-adic-numbers-and-p-adic-integers-only-defined-for-p-prime" target="_blank" rel="noopener noreferrer">finite fields</a> 
               suggests why an <em>n</em>-adic norm might not be useful 
               for composite number bases <em>n</em>.
-              <sup><a href="#prime_footnote_marker">[back to top]</a></sup>
+              <sup><a href="#nav">[back to top]</a></sup>
           </li>
           <li>
             Basic arithmetic expressions will work in the rational number input 
             field, e.g. (1+2)-3*4/5**6
           </li>
           <li>
-            The default output is provided as a rational expression for the 
+            The default output is provided as a rational number for the 
             user to compute to their desired precision.  The float button uses 
             [insert]-bit precision.
           </li>
         </ol>
+      <a href="#nav">[back to top]</a>
     </section>
     {% endblock notes %}
 
@@ -160,6 +215,7 @@
               p-adic Numbers in SageMath</a> (SageMath Documentation)</li>
             </li>
           </ol>
+        <a href="#nav">[back to top]</a>
     </section>
     {% endblock references %}
 

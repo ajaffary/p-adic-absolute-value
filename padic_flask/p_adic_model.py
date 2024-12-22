@@ -23,7 +23,7 @@ class InputForm(Form):
                          validators=[validators.InputRequired()],
                          id='prime',
                          default=3,
-                         render_kw={'aria_label': 'prime'})
+                         render_kw={'aria_label': 'prime', 'min': 2})
     
     """
     - the number variable is a FloatField since it is a floating-point variable
@@ -39,4 +39,4 @@ class InputForm(Form):
     # how does WTForms render value=?
     submit = SubmitField(label='Submit',
                          id='submit',
-                         render_kw={'aria_label': 'submit'})
+                         render_kw={'aria_label': 'submit', 'class': 'reverse'})

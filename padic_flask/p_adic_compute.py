@@ -79,4 +79,8 @@ def p_adic_abs(prime: int, rational):
     else:
         # question: return as float or fraction?
         # refactor as class method?
-        return to_fraction(abs)
+        return { 
+            'valuation': val,
+            'float': abs,
+            'fraction': to_fraction(abs)
+        }

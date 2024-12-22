@@ -1,4 +1,9 @@
 {% macro input(form, element)-%}
   <p>{{ form[element].label()|safe }}</p>
   <p>{{ form[element]|safe }}</p>
-{%- endmacro %}  
+{%- endmacro %}
+
+{% macro back_to_top() -%}
+  <a href="#nav">[back to top]</a>
+{%- endmacro %}
+
