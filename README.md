@@ -1,6 +1,6 @@
 # p-adic Absolute Value
 
-This is a tiny [Flask](https://flask.palletsprojects.com/en/stable/) application to calculate the p-adic absolute-value of a rational number.
+This is a tiny [Flask](https://flask.palletsprojects.com/en/stable/) application to calculate the [p-adic norm](https://mathworld.wolfram.com/p-adicNorm.html) of a rational number.
 
 1. Install the Flask, WTForms, and flask_wtf packages (see `requirements.txt`).
 2. `python p_adic_controller.py` runs the application in a browser at http://127.0.0.1:5000/test.
@@ -13,10 +13,23 @@ This is a tiny [Flask](https://flask.palletsprojects.com/en/stable/) application
 
 `p_adic_compute` contains the computation functions.  `p_adic_abs` is the old version.
 
-The function `p_adic_abs` takes a prime $p$ and a rational number $x$ as its arguments, and returns the 
-p-adic absolute value $|x|_p$ as:
-- an integer, when the answer is a whole number
-- a string expressed as a ratio of integer a/b, when the answer is a float
+The function `p_adic_abs` takes a prime $p$ and a rational number $x$ as its arguments, and returns a dictionary:
+
+    { 
+        'valuation': val,
+        'float': abs,
+        'fraction: to_fraction(abs)
+    }
+
+where:
+
+- `val` is the p-adic valuation $val_p(x)$
+- `abs` is the p-adic norm $|x|_p$ a float
+- `to_fraction(abs)` is a string expressed as a ratio of integer a/b
+
+When `abs` is an integer, it has type `int`. Floats are converted to an integer ratio (with the `fractions` package).  This is for pedagogical rather than computational purposes.  
+
+The web app interface returns the valuation and the fractional representation of the norm. The user can then choose between float or fraction.  A copy to the clipboard button is also provided.
 
 Example in terminal:
 
@@ -27,5 +40,3 @@ Example in terminal:
     
     p.p_adic_abs(5, 200)
     '1/25'
-
-Floats are converted to an integer ratio with the `fractions` package.  This is chosen to analyze the result for pedagogical rather than computational purposes.  This will be refactored so that either version can be chosen.
