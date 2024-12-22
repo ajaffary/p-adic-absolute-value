@@ -2,6 +2,12 @@
 
 ## To Do List
 
+### Deploy
+- read docs on free deployment services
+  - Azure
+  - PythonAnywhere
+  - https://medium.com/@alisdair_/5-top-free-hosting-platforms-for-python-apps-2024-best-heroku-alternatives-c31c0a2837d1
+
 ### Controller
 - change "enter prime" to "choose a prime" (?)
   - enter a prime is better for now?
@@ -59,13 +65,13 @@
   - valuation (done)
 - copy to clipboard button (done)
 
-### Notes
+### Notes (done)
 - rational provided for you to compute floats to your own precision
 - arithmetic expressions will work
 - will work with composites, but not "useful" (?)
   - see reference on finite fields
 
-### References
+### References (done)
 - https://math.stackexchange.com/questions/1919274/why-are-p-adic-numbers-and-p-adic-integers-only-defined-for-p-prime
 - wolfram p-adic
 - sagemath library

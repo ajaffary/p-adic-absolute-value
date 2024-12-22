@@ -131,15 +131,18 @@
           </p>
         </div>
         <div class="app-tile app-tile-row-4">
-          <p>
-            <button id="show-float" type="button" onclick="showResult('float')">Convert Norm to Float</button>
-          </p>
-          <p>
-            <button id="show-rational" type="button" onclick="showResult('fraction')">Convert Norm to Fraction</button>
-          </p>
-          <p>
-            <button id="copy-result" type="button" onclick="copyResult()">Copy Norm to Clipboard</button>
-          </p>
+          <fieldset>
+            <legend class="left">Options</legend>
+            <p>
+              <button id="show-float" type="button" onclick="showResult('float')">Convert Norm to Float</button>
+            </p>
+            <p>
+              <button id="show-rational" type="button" onclick="showResult('fraction')">Convert Norm to Fraction</button>
+            </p>
+            <p>
+              <button id="copy-result" type="button" onclick="copyResult()">Copy Norm to Clipboard</button>
+            </p>
+          </fieldset>
           <p class="back-to-top left">
             {{ macros.back_to_top() }}
           </p>

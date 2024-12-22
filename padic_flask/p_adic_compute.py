@@ -75,7 +75,7 @@ def p_adic_abs(prime: int, rational):
     abs = 1/((prime)**(val))
 
     if val <= 0:
-        return int(abs)
+        abs = int(abs)
     else:
         # question: return as float or fraction?
         # refactor as class method?

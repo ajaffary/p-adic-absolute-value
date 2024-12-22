@@ -74,7 +74,6 @@ p.back-to-top > a {
     margin: 30px 0px 0px 0px;
     padding: auto;
     font-size: 1.2rem;
-    text-align: left;
 }
 
 body {
@@ -122,6 +121,11 @@ div.app-tile > p {
     font-size: var(--font-size);
 }
 
+fieldset {
+    font-size: var(--font-size);
+    margin: 10px 10px 2rem 10px;
+}
+
 footer {
     margin: 0;
     padding: 0;
@@ -150,9 +154,12 @@ input, .result {
 }
 
 .left {
-    display: block;
-    margin: auto;
+    margin: 5px;
     text-align: left;
+}
+
+legend {
+    padding: 5px;
 }
 
 main a, footer a {
@@ -241,6 +248,10 @@ ol > li {
 section {
     margin: 0;
     padding: 0;
+}
+
+#show-float {
+    margin-top: 0px;
 }
 
 #submit {
