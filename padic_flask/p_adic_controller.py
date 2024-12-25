@@ -1,7 +1,7 @@
 from flask import Flask, request, url_for, render_template
-from markupsafe import Markup
 from p_adic_compute import p_adic_abs
 from p_adic_model import InputForm
+import gunicorn
 
 app = Flask(__name__)
 """
@@ -65,4 +65,5 @@ def p_adic_view():
     return render_template("p_adic_view.html", form=input_form, result=result)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0")
+    # app.run(debug=True)
