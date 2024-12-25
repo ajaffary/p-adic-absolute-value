@@ -65,5 +65,5 @@ def p_adic_view():
     return render_template("p_adic_view.html", form=input_form, result=result)
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0")
-    # app.run(debug=True)
+    # app.run(host="0.0.0.0")
+    app.run(debug=True)

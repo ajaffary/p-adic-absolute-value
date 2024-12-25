@@ -33,7 +33,7 @@ class InputForm(Form):
     rational = StringField(label='Enter a rational number:', 
                           validators=[validators.InputRequired()],
                           id='rational',
-                          default=75/9,
+                          default='75/9',
                           render_kw={'aria_label': 'rational'})
     
     # how does WTForms render value=?
