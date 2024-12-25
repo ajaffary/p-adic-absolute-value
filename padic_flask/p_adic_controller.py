@@ -25,7 +25,7 @@ the web page.
 """
 
 # route decorator
-@app.route('/test', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def p_adic_view():
     """
     This function calls a form object from the model and a compute function
