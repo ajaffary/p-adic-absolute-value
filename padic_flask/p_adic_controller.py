@@ -59,9 +59,6 @@ def p_adic_view():
     else:
         result = None
     
-    # rounding?
-    # result = '%.5f' % result
-    
     return render_template("p_adic_view.html", form=input_form, result=result)
 
 if __name__ == '__main__':
