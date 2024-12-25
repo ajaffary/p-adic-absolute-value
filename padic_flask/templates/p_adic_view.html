@@ -10,11 +10,11 @@
 {% endblock title%}
 
 {% block script %}
-  <!-- 
+  
     <script type="text/javascript" id="MathJax-script" async
     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
     </script>
-    -->
+
   <script type="text/javascript" src="static/methods.js"></script>
 {% endblock script %}
 
@@ -109,7 +109,7 @@
                 <mo>=</mo>
               </mrow>
             </math>
-            <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <!-- <math xmlns="http://www.w3.org/1998/Math/MathML">
               <msub>
                 <mfenced open="|" close="|">
                   <mo>|</mo>
@@ -122,6 +122,7 @@
             </math>
             </p>
             <p>
+            -->
             <!-- controller passes value of result here -->
             <output data-fraction="{{ result['fraction']|safe }}" data-float="{{ result['float']|safe }}" for="prime rational" name="result" id="result" class="result">
               {% if result != None %}

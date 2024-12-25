@@ -1,6 +1,5 @@
 # compute module for all calculation functions
-
-from math import log
+# from math import log
 from fractions import Fraction
 
 # check if an integer is divisible by a given integer
@@ -85,6 +84,6 @@ def p_adic_abs(prime: int, rational):
     else:    
         return { 
             'valuation': val,
-            'float': abs,
+            'float': round(abs,12),
             'fraction': to_fraction(abs)
         }
