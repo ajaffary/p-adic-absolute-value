@@ -74,11 +74,15 @@ def p_adic_abs(prime: int, rational):
     # compute p-adic norm
     abs = 1/((prime)**(val))
 
+    # refactor as class method?
     if val <= 0:
         abs = int(abs)
-    else:
-        # question: return as float or fraction?
-        # refactor as class method?
+        return {
+            'valuation': val,
+            'float': abs,
+            'fraction': abs
+        }
+    else:    
         return { 
             'valuation': val,
             'float': abs,
