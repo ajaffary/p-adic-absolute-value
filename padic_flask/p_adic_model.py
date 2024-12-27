@@ -37,6 +37,6 @@ class InputForm(Form):
                           render_kw={'aria_label': 'rational'})
     
     # how does WTForms render value=?
-    submit = SubmitField(label='Submit',
+    submit = SubmitField(label='Calculate',
                          id='submit',
                          render_kw={'aria_label': 'submit', 'class': 'reverse'})
