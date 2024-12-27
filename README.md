@@ -1,5 +1,7 @@
 # p-adic Norm Calculator
 
+This app is online at [https://p-adic-norm.up.railway.app/](https://p-adic-norm.up.railway.app/)
+
 This is a [Flask](https://flask.palletsprojects.com/en/stable/) application to calculate the [p-adic norm](https://mathworld.wolfram.com/p-adicNorm.html) of a rational number.
 
 `p_adic_controller.py` contains the app logic.
