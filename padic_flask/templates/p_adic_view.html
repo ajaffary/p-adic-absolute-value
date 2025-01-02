@@ -42,6 +42,7 @@
       <!-- {form} is the instantiation of InputForm defined in p_adic_controller -->
       <form method="POST" action="#results" id="p-adic_input_form_jinja" 
             aria-labelledby="app_id">
+            {{ form.hidden_tag() }}
         <div id="input-tile" class="app-tile app-tile-row-1">
           <!-- 
             Use for debugging form validation

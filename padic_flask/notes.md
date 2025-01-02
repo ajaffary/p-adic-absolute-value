@@ -7,10 +7,13 @@
   - Azure
   - PythonAnywhere
   - https://medium.com/@alisdair_/5-top-free-hosting-platforms-for-python-apps-2024-best-heroku-alternatives-c31c0a2837d1
+  - Railway (done)
+  - Vercel
+  - fly.io
 
 ### Controller
 - change "enter prime" to "choose a prime" (?)
-  - enter a prime is better for now?
+  - enter a prime is better for now? (done)
 
 ### Model
 - add labels and default values to form elements (done)
@@ -19,6 +22,7 @@
   - suggest a link for user
 - allow user to enter their own prime?
   - requires prime number validator (see below)
+- Switch to FlaskWTF Flaskform class
 
 ### View
 - create full HTML page structure (done)
@@ -34,7 +38,7 @@
     - macros for input fields (done)
     - can WTForms class output `<form>` element? (no)
     - next: put macros in their own file & import (done)
-    - fieldset and legend
+    - fieldset and legend (done)
     - min on input field (done with render_kw)
 - update app interface
   - add labels to form input fields (done)

@@ -10,7 +10,7 @@ from markupsafe import Markup
 - these form field objects correspond to HTML forms in the input page
 """ 
 
-class InputForm(Form):
+class InputForm(FlaskForm):
     """
     - the prime variable is an IntegerField since it is an integer variable
     - a default validator checks that the user supplies an integer
