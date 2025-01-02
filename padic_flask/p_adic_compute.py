@@ -1,5 +1,4 @@
 # compute module for all calculation functions
-# from math import log
 from fractions import Fraction
 
 # check if an integer is divisible by a given integer
@@ -24,6 +23,10 @@ def valuation(prime: int, integer: int):
     # initialize valuation
     valuation = 0
 
+    # check if integer is zero
+    if integer == 0:
+        return float('inf')
+    
     # check divisibility
     remainder = is_divisible(prime, integer)
 
@@ -32,10 +35,6 @@ def valuation(prime: int, integer: int):
         valuation += 1
         integer = integer / prime
         remainder = is_divisible(prime, integer)
-        # int(log(integer, prime))
-    #else:
-        # if integer is not divisible by prime, valuation is zero
-    #    valuation = 0
     
     return valuation
 
@@ -44,6 +43,10 @@ def valuation(prime: int, integer: int):
 #   the p-adic valuation of a rational number is the difference between
 #   the valuations on the numerator and the denominator
 def valuation_rational(prime: int, rational):    
+    # check if rational is zero
+    if rational == 0:
+        return float('inf')
+
     # convert float to ratio of integers a/b
     # see https://docs.python.org/3/library/fractions.html
     # ratio = Fraction(rational).limit_denominator().as_integer_ratio()
@@ -69,6 +72,14 @@ def p_adic_abs(prime: int, rational):
     
     # compute valuation
     val = valuation_rational(prime, rational)
+
+    # check if valuation is infinite (i.e. rational is zero)
+    if val == float('inf'):
+        return {
+            'valuation': val,
+            'float': 0,
+            'fraction': 0
+        }
 
     # compute p-adic norm
     abs = 1/((prime)**(val))

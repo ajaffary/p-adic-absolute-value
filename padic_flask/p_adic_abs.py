@@ -16,6 +16,7 @@ def is_divisible(divisor, dividend):
     # refactor into compute module?
     return dividend % divisor == 0
 
+# this is INCORRECT and will not produce the correct valuation
 def valuation(prime, number):
     # refactor into compute module?
     remainder = is_divisible(prime, number)
