@@ -3,7 +3,7 @@ from flask import Flask, request, url_for, render_template
 from p_adic_compute import p_adic_abs
 from p_adic_model import InputForm
 from flask_wtf.csrf import CSRFProtect
-# import gunicorn
+import gunicorn
 
 # The web application is the app object of class Flask.
 app = Flask(__name__)
