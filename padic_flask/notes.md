@@ -14,6 +14,7 @@
 ### Controller
 - change "enter prime" to "choose a prime" (?)
   - enter a prime is better for now? (done)
+- gunicorn -w 4 'p_adic_controller:app'
 
 ### Model
 - add labels and default values to form elements (done)
@@ -22,7 +23,7 @@
   - suggest a link for user
 - allow user to enter their own prime?
   - requires prime number validator (see below)
-- Switch to FlaskWTF Flaskform class
+- Switch to FlaskWTF Flaskform class (done)
 
 ### View
 - create full HTML page structure (done)
